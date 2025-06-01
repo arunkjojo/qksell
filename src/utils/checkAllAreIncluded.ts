@@ -1,0 +1,1 @@
+export const checkIfAllStepsIncluded = (checkingArray: string[], fromArray: string[]): boolean => checkingArray.every((step) => fromArray.includes(step));

@@ -1,0 +1,80 @@
+{
+    "id": "qksell",
+    "name": "QkSell Advts",
+    "short_name": "QkSell",
+    "description": "QkSell.in is free marketplace advertisement website. You can buy and sell anything you want.",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "display_override": [
+        "window-controls-overlay",
+        "minimal-ui",
+        "fullscreen",
+        "browser",
+        "standalone",
+        "window-controls-overlay"
+    ],
+    "background_color": "#ffffff",
+    "theme_color": "#128756",
+    "orientation": "portrait",
+    "dir": "ltr",
+    "lang": "en",
+    "categories": [
+        "business",
+        "finance",
+        "news",
+        "productivity",
+        "social",
+        "utilities",
+        "shopping",
+        "auto-vehicles"
+    ],
+    "icons": [
+        {
+            "src": "images/maskable_icon_x72.png",
+            "sizes": "72x72",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "images/maskable_icon_x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "images/maskable_icon_x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Main",
+            "url": "https://dev.qksell.in/",
+            "description": "Main page"
+        },
+        {
+            "name": "Login",
+            "url": "https://dev.qksell.in/signin",
+            "description": "Login page"
+        },
+        {
+            "name": "New Post",
+            "url": "https://dev.qksell.in/newpost",
+            "description": "New post page"
+        },
+        {
+            "name": "Cart",
+            "url": "https://dev.qksell.in/cart",
+            "description": "Cart page"
+        },
+        {
+            "name": "Search",
+            "url": "https://dev.qksell.in/search",
+            "description": "Search page"
+        }
+    ],
+    "prefer_related_applications": true
+}
