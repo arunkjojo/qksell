@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { LoadingProvider } from '@context/LoadingContext';
+import { NewPostIcon } from '@ui/NewPostIcon';
 import Header from '@components/layout/Header';
 import Footer from '@components/layout/Footer';
 import { APP_PATH } from '@common/constants';
@@ -11,8 +13,7 @@ import { Cart } from '@pages/Cart';
 import { Search } from '@pages/Search';
 import { PostDetails } from '@pages/PostDetails';
 import { NotFound } from '@pages/NotFound';
-import { LoadingProvider } from '@context/LoadingContext';
-import { NewPostIcon } from '@ui/NewPostIcon';
+import { CategoryPost } from '@pages/CategoryPost';
 
 const HeaderFooterWrapper = ({ children }: { children: React.ReactNode }) => (
   <>
@@ -48,6 +49,7 @@ function App() {
               <Route path="/pm/:id" element={<HeaderFooterWrapper><PostDetails /></HeaderFooterWrapper>} />
               <Route path="/cart/:id" element={<Cart />} />
               <Route path="/search" element={<HeaderFooterWrapper><Search /></HeaderFooterWrapper>} />
+              <Route path="/category/:cname" element={<HeaderFooterWrapper><CategoryPost /></HeaderFooterWrapper>} />
               <Route path="/newpost/state" element={<NewPost activeStage={APP_PATH.STATE} />} />
               <Route path="/newpost/district" element={<NewPost activeStage={APP_PATH.DISTRICT} />} />
               <Route path="/newpost/category" element={<NewPost activeStage={APP_PATH.CATEGORY} />} />

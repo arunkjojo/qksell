@@ -41,7 +41,7 @@ const Header: React.FC = () => {
     navigate('/newpost');
   };
 
-  const whatsAppMessage = (message:string = "Hello, I'm interested in posting an advertisement on qksell.in.\nCould you please help me through the process?") => {
+  const whatsAppMessage = (message: string = "Hello, I'm interested in posting an advertisement on qksell.in.\nCould you please help me through the process?\n👇\nHello, I want to post in qksell.in.") => {
     const phoneNumber = '919995468633';
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
