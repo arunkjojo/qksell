@@ -143,8 +143,12 @@ export const PostDetails: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>{product?.title || ''} | Qksell.in Marketplace</title>
+        <title>{product?.title + ' | ' || ''}Qksell.in Marketplace</title>
         <meta name="description" content={product?.description} />
+        <meta name="og:title" content={product?.title} />
+        <meta name="og:description" content={product?.description} />
+        <meta name="og:image" content={product?.images[0]} />
+        <meta name="og:url" content={window.location.href} />
       </Helmet>
       <div className="bg-gray-50 py-4 min-h-screen">
         <div className="container mx-auto px-4">

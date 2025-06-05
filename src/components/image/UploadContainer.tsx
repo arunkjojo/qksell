@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useFileUpload } from '@hooks/useFileUpload';
 import { FileMetadata, PostAssets } from '@common/types';
 import { deletePostAsset, fetchPostImageById } from '@common/api';
@@ -9,11 +9,8 @@ import UploadDropzone from './UploadDropzone';
 import FileList from './FileList';
 import UploadControls from './UploadControls';
 import FilePreview from './FilePreview';
-import Button from '@ui/Button';
-import { Goal } from 'lucide-react';
 
 const UploadContainer: React.FC = () => {
-  const navigate = useNavigate();
   const params = useParams();
   const [images, setImages] = useState<PostAssets[]>([]);
 
@@ -66,7 +63,6 @@ const UploadContainer: React.FC = () => {
     const loadPostImages = async () => {
       if (params?.id) {
         const response = await fetchPostImageById(base64Decode(params?.id ?? ''));
-        // console.log('==========res', Array.isArray(response) ? response : []);
         setImages(() => {
           return Array.isArray(response)
             ? response.map(item => ({
@@ -80,24 +76,14 @@ const UploadContainer: React.FC = () => {
     loadPostImages();
   }, [params?.id, isUpdatedToDb]);
 
-  const postImageContinue = () => {
-    const id = base64Decode(params?.id || '');
-    navigate(`/pm/${id}`);
-  }
-
   const successfulUploads = images // ?.filter(file => file?.FileDetails?.status === 'success');
   return (
-    <div className="w-full max-w-3xl mx-auto p-4">
-      <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
+    <div className="w-full max-w-3xl mx-auto p-2">
+      <div className="bg-white p-5 md:p-6">
         <h2 className="text-xl font-semibold text-gray-800 mb-4">
-          Upload Images
+          Upload Photo
         </h2>
-        
-        <p className="text-gray-600 mb-6">
-          Drag and drop your images for automatic upload and compression. 
-          All sizes are supported and will be optimized.
-        </p>
-        
+  
         <UploadDropzone 
           onFilesAdded={handleFilesAdded} 
           disabled={isUploading}
@@ -124,23 +110,13 @@ const UploadContainer: React.FC = () => {
             </div>
           </div>
         )}
-        {successfulUploads.length > 0 && (
-          <div className="flex justify-end">
-            <Button
-              variant="secondary"
-              onClick={postImageContinue}
-            >
-              <Goal className="w-4 h-4 mr-2" />
-              Continue
-            </Button>
-          </div>
-        )}
         
         <UploadControls 
           files={files}
           isUploading={isUploading}
           onUpload={uploadFiles}
           onClearCompleted={clearCompleted}
+          successfulUploads={successfulUploads.length}
         />
       </div>
     </div>

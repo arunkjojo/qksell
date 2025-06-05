@@ -1,17 +1,12 @@
 import React, { useEffect } from 'react';
 import CategorySection from '@components/home/CategorySection';
 import FeaturedListings from '@components/home/FeaturedListings';
-import HowItWorks from '@components/home/HowItWorks';
-import Testimonials from '@components/home/Testimonials';
-import CtaSection from '@components/home/CtaSection';
 import { useAppDispatch } from '@common/hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
 import { fetchCategories, fetchLatestPost } from '@api/index';
 import { setCategoryList, setProductList } from '@store/appSlice';
 import { useLoading } from '@hooks/useLoading';
 import { getCookie } from '@common/utils/getCookie';
-// import { categories } from '@common/data/categories';
-// import { products } from '@common/data/products';
 
 export const Home: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -58,9 +53,6 @@ export const Home: React.FC = () => {
     <div>
       <CategorySection />
       <FeaturedListings />
-      <HowItWorks />
-      <Testimonials />
-      <CtaSection />
     </div>
   );
 };

@@ -78,7 +78,7 @@ const UploadDropzone: React.FC<UploadDropzoneProps> = ({
               ? isDragReject
                 ? "Unsupported file type"
                 : "Drop the files here..."
-              : "Drag & drop files here, or click to select"}
+              : "Click to select photo"}
           </p>
           <p className="text-xs text-gray-500">
             Supports image files (JPEG, JPG, PNG, TIFF, HEIF)

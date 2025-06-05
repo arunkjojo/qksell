@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
-import type { ApiResponse, AuthLoginResponse, Category, District, OtpResponse, PaymentStatusResponse, PhonePePayload, PhonePeResponse, PostData, PostResponse, Product, PromotionOrderPayload, PromotionResponse, State, VerificationResponse } from '@common/types';
+import type { ApiResponse, AuthLoginResponse, Category, District, OtpResponse, PaginatedData, PaymentStatusResponse, PhonePePayload, PhonePeResponse, PostData, PostResponse, Product, PromotionOrderPayload, PromotionResponse, State, VerificationResponse } from '@common/types';
 import { setIdparamsToApi } from '@utils/apiParams';
 import { displayStatus } from '@utils/displayStatus';
-import { authLoginUrl, createPostUrl, getCategoriesUrl, getDistrictByIdUrl, getLatestPostUrl, getLocationsByIdUrl, getLocationsUrl, getPaymentStatusUrl, getPostByIdUrl, getSimilarPostByIdUrl, paymentUrl, postImgeByIdUrl, postImgeUrl, promotionUrl, sendOtpUrl, updateOrderStatusUrl, updatePaymentStatusUrl, validateOtpUrl } from './url';
+import { authLoginUrl, createPostUrl, getCategoriesUrl, getDistrictByIdUrl, getLatestPostUrl, getLocationsByIdUrl, getLocationsUrl, getPaymentStatusUrl, getPostByIdUrl, getPostListByCategoryUrl, getSimilarPostByIdUrl, paymentUrl, postImgeByIdUrl, postImgeUrl, promotionUrl, sendOtpUrl, updateOrderStatusUrl, updatePaymentStatusUrl, validateOtpUrl } from './url';
 
 
 export async function fetchStates(): Promise<ApiResponse<State>> {
@@ -287,5 +287,38 @@ export async function authLogin(mobile: string): Promise<AuthLoginResponse | und
   } catch (error) {
     console.error('Error login:', error);
     return undefined;
+  }
+}
+
+export async function getPostListByCategory({
+  cname,
+  page,
+  limit
+}: {
+  cname: string;
+  page: number;
+  limit: number;
+}): Promise<ApiResponse<PaginatedData<Product>>> {
+  const params = new URLSearchParams({
+    cname: cname.toString(),
+    page: page.toString(),
+    limit: limit.toString()
+  });
+
+  try {
+    const response = await fetch(`${getPostListByCategoryUrl}?${params}`);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch posts: ${response.statusText}`);
+    }
+
+    const json: PaginatedData<Product> = await response.json();
+
+    return { data: [json], error: '' };
+  } catch (error) {
+    return {
+      data: [],
+      error: (error as Error).message
+    };
   }
 }

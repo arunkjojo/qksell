@@ -34,15 +34,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="p-2 flex-1 flex flex-col justify-between">
         <div>
           <div className="flex flex-wrap items-start justify-between gap-2">
-            <h4 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+            <h5 className="font-medium text-[0.75rem] text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
               {product?.title?.replace(' , ', ', ')?.replace(', ', ',')?.replace(',', ', ')}
-            </h4>
-            <h6 className="font-medium text-gray-700 line-clamp-2">
+            </h5>
+            <h6 className="font-medium text-gray-700 line-clamp-2 text-[0.7rem]">
               {product?.local_title?.replace(' , ', ', ')?.replace(', ', ',')?.replace(',', ', ')}
             </h6>
             <div className='flex justify-between w-full'>
             <div className="font-bold text-blue-600"> {formatPrice(product?.price)} </div>
-              <div className="text-gray-500 text-sm mt-1 bg-yellow-300 rounded-md px-2">{product?.location?.name}</div>
+              <div className="text-black text-sm mt-1 bg-yellow-300 rounded-md px-2">{product?.location?.name}</div>
             </div>
           </div>
           {!isMobile && (

@@ -34,7 +34,7 @@ export interface Product {
   };
   createdAt: string;
   featured?: boolean;
-  view?: number
+  view?: number;
 }
 
 export interface Category {
@@ -309,4 +309,11 @@ export interface AuthData {
 export interface AuthLoginResponse {
   token: string | null;
   authMobile: string
+}
+export interface PaginatedData<T> {
+  data: T[];
+  hasMore: boolean;
+  totalItems: number;
+  pageNumber: number;
+  itemPerPage: number;
 }
