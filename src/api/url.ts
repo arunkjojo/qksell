@@ -30,6 +30,7 @@ const UPDATE_ORDER = "successPayment.php";
 const UPDATE_STATUS = "phonepeStatusUpdate.php";
 
 const LOGIN = "login.php";
+const CATEGORY_POST_LIST = "categoryPost.php";
 
 // Application API urls
 export const getLocationsUrl = `${API_BASE_URL}/${LOCATIONS}`;
@@ -56,3 +57,5 @@ export const updateOrderStatusUrl = `${API_BASE_URL}/${UPDATE_ORDER}`;
 export const updatePaymentStatusUrl = `${API_BASE_URL}/${UPDATE_STATUS}`;
 
 export const authLoginUrl = `${API_BASE_URL}/${LOGIN}`;
+
+export const getPostListByCategoryUrl = `${API_BASE_URL}/${CATEGORY_POST_LIST}`;

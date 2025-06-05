@@ -15,11 +15,11 @@ import { PostDetails } from '@pages/PostDetails';
 import { NotFound } from '@pages/NotFound';
 import { CategoryPost } from '@pages/CategoryPost';
 
-const HeaderFooterWrapper = ({ children }: { children: React.ReactNode }) => (
+const HeaderFooterWrapper = ({ newPost = true, children }: { newPost?: boolean;children: React.ReactNode }) => (
   <>
     <Header />
     {children}
-    <NewPostIcon />
+    {newPost && <NewPostIcon />}
     <Footer />
   </>
 );
@@ -46,10 +46,10 @@ function App() {
               <Route path="/newpost" element={<NewPost activeStage={APP_PATH.STATE} />} />
               <Route path="/image-upload/:id" element={<ImageUpload />} />
               <Route path="/p/:id" element={<HeaderFooterWrapper><PostDetails /></HeaderFooterWrapper>} />
-              <Route path="/pm/:id" element={<HeaderFooterWrapper><PostDetails /></HeaderFooterWrapper>} />
+              <Route path="/pm/:id" element={<HeaderFooterWrapper newPost={false}><PostDetails /></HeaderFooterWrapper>} />
               <Route path="/cart/:id" element={<Cart />} />
               <Route path="/search" element={<HeaderFooterWrapper><Search /></HeaderFooterWrapper>} />
-              <Route path="/category/:cname" element={<HeaderFooterWrapper><CategoryPost /></HeaderFooterWrapper>} />
+              <Route path="/c/:cname" element={<HeaderFooterWrapper><CategoryPost /></HeaderFooterWrapper>} />
               <Route path="/newpost/state" element={<NewPost activeStage={APP_PATH.STATE} />} />
               <Route path="/newpost/district" element={<NewPost activeStage={APP_PATH.DISTRICT} />} />
               <Route path="/newpost/category" element={<NewPost activeStage={APP_PATH.CATEGORY} />} />

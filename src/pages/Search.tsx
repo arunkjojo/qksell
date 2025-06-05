@@ -17,7 +17,8 @@ export const Search: React.FC = () => {
     const matchesSearch = searchTerm ? (
       product?.title?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
       product?.description?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
-      product?.category?.toLowerCase().includes(searchTerm?.toLowerCase())
+      product?.category?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+      product?.location?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
     ) : true;
 
     const matchesLocation = location ?

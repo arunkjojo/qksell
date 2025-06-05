@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, MessageCircleMore, Mail, MessageSquare, MapPin } from 'lucide-react';
+import { Facebook, MessageCircleMore, MessageSquare, MapPin } from 'lucide-react';
 
 const Footer: React.FC = () => {
-  const whatsAppMessage = (message: string = "Hello, I'm interested in posting an advertisement on qksell.in.\nCould you please help me through the process?") => {
+  const whatsAppMessage = (message: string = "Hello, I want to post in qksell.in.") => {
     const phoneNumber = '919995468633';
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   };
   return (
-    <footer className="bg-gray-900 text-gray-300">
+    <footer className="bg-gray-900 text-gray-300 pb-10">
       <div className="container mx-auto p-4">
         <div className="flex flex-wrap flex-col sm:flex-row gap-5">
           <div className='flex-1'>
@@ -51,18 +51,18 @@ const Footer: React.FC = () => {
           <div className='flex-1'>
             <h3 className="text-lg font-semibold text-white mb-4">Contact Us</h3>
             <ul className="space-y-3 text-sm">
-              <li className="flex items-start" onClick={() => whatsAppMessage()}>
+              <li className="flex items-start hover:text-green-500 cursor-pointer" onClick={() => whatsAppMessage()}>
                 <MapPin size={18} className="mr-2 text-gray-400 mt-0.5" />
                 <span>North Paravoor, Ernakulam, Kerala</span>
               </li>
-              <li className="flex items-center" onClick={() => whatsAppMessage()}>
+              <li className="flex items-center hover:text-green-500 cursor-pointer" onClick={() => whatsAppMessage()}>
                 <MessageSquare size={18} className="mr-2 text-gray-400" />
                 <span>+919995468633</span>
               </li>
-              <li className="flex items-center" onClick={() => whatsAppMessage()}>
+              {/* <li className="flex items-center" onClick={() => whatsAppMessage()}>
                 <Mail size={18} className="mr-2 text-gray-400" />
                 <span>support@qksell.in</span>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

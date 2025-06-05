@@ -13,7 +13,7 @@ const CategorySection: React.FC = () => {
           {categories?.map((category) => (
             <Link 
               key={category?.id}
-              to={`/category/${toSlug(category?.name)}`}
+              to={`/c/${toSlug(category?.name)}`}
               className="flex flex-col items-center justify-center p-1 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow text-center group"
             >
               <div className="w-12 h-12 flex items-center justify-center bg-blue-50 rounded-full group-hover:bg-blue-100 transition-colors">
