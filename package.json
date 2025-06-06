@@ -2,7 +2,7 @@
   "name": "qksell-web-application",
   "version": "0.2.1",
   "type": "module",
-  "scripts": {s
+  "scripts": {
     "dev": "vite",
     "eslint": "eslint .",
     "preview": "vite preview",

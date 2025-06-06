@@ -7,15 +7,20 @@ import Input from '@ui/Input';
 import { getCookie } from '@utils/getCookie';
 import { base64Decode } from '@utils/base64Decode';
 import { useIsMobile } from '@hooks/useIsMobile';
+import { CitySearchModal } from '@components/search/CitySearchModal';
+import { District } from '@common/types';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile()
   const [searchTerm, setSearchTerm] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // For demo purposes
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isCitySearchOpen, setIsCitySearchOpen] = useState(false);
+  const [selectedCity, setSelectedCity] = useState('');
 
   const locationName = getCookie('LocationName');
+  
   useEffect(() => {
     const authToken = parseInt(base64Decode(base64Decode(getCookie('userToken') ?? '')), 10);
     if (authToken && !isNaN(authToken)) {
@@ -25,7 +30,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     if (locationName) {
-      setSearchTerm(locationName);
+      setSelectedCity(locationName);
     }
   }, [locationName]);
 
@@ -54,139 +59,162 @@ const Header: React.FC = () => {
     navigate(`/search?${searchParams.toString()}`);
   };
 
+  const handleCityInputClick = () => {
+    setIsCitySearchOpen(true);
+  };
+
+  const handleCitySelect = (city: District) => {
+    setSelectedCity(city.name);
+    setIsCitySearchOpen(false);
+  };
+
+  const handleCitySearchClose = () => {
+    setIsCitySearchOpen(false);
+  };
+
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <span className="text-2xl font-bold">
-              <span className="text-blue-600">QK</span>
-              <span className="text-teal-600">Sell</span>
-            </span>
-          </Link>
+    <>
+      <header className="bg-white shadow-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <Link to="/" className="flex items-center">
+              <span className="text-2xl font-bold">
+                <span className="text-blue-600">QK</span>
+                <span className="text-teal-600">Sell</span>
+              </span>
+            </Link>
 
-          <div className="flex flex-1 max-w-xl mx-2">
-            <div className="relative w-full">
-              <Input
-                placeholder="City Name"
-                icon={<Search size={18} />}
-                fullWidth
-                className="pr-4 py-2 bg-gray-50 border-0 focus:bg-white focus:ring-1"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-              />
-            </div>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-3">
-            <Link to="/favorites" className="text-gray-700 hover:text-blue-600 transition-colors">
-              <Heart size={22} />
-            </Link>
-            <Button
-              onClick={() => whatsAppMessage()}
-              variant="link"
-              className='text-gray-700 hover:text-blue-600 transition-colors'
-            >
-              <BsWhatsapp size={22} />
-            </Button>
-            {isLoggedIn ? (
-              <div className="flex items-center gap-4">
-                <Link to="/profile" className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors">
-                  <User size={22} />
-                </Link>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2">
-                <Button 
-                  onClick={toLogin} 
-                  variant="outline"
-                >
-                  Sign In
-                </Button>
-              </div>
-            )}
-            {!isMobile && <Button 
-              variant="secondary"
-              onClick={() => toNewPost()} 
-              icon={<ShoppingBag size={18} />}
-              className="bg-teal-600 hover:bg-teal-700 text-white font-medium"
-            >
-              <Link to="/newpost">
-                Sell Now
-              </Link>
-            </Button>}
-          </div>
-
-          {/* Mobile menu button and sell button */}
-          <div className="md:hidden flex items-center gap-2">
-            <Button
-              onClick={() => whatsAppMessage()}
-              variant="link"
-              className='text-gray-700 hover:text-blue-600 transition-colors'
-            >
-              <BsWhatsapp size={22} color='green' />
-            </Button>
-            <button 
-              onClick={toggleMenu} 
-              className="text-gray-700"
-              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Navigation Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 px-4 py-2 animate-slideDown">
-          <nav className="flex flex-col space-y-3 py-2">
-            <Link to="/" className="py-2 px-3 hover:bg-gray-50 rounded-md" onClick={toggleMenu}>
-              Home
-            </Link>
-            <Link to="/favorites" className="py-2 px-3 hover:bg-gray-50 rounded-md flex items-center gap-2" onClick={toggleMenu}>
-              <Heart size={18} /> Favorites
-            </Link>
-            <Link to="/messages" className="py-2 px-3 hover:bg-gray-50 rounded-md flex items-center gap-2" onClick={toggleMenu}>
-              <MessageSquare size={18} /> Messages
-            </Link>
-            <Link to="/profile" className="py-2 px-3 hover:bg-gray-50 rounded-md flex items-center gap-2" onClick={toggleMenu}>
-              <User size={18} /> My Account
-            </Link>
-            <div className="pt-2 border-t border-gray-100">
-              {isLoggedIn ? (
-                <Button 
-                  onClick={() => {
-                    toggleMenu();
-                  }} 
-                  variant="outline"
+            <div className="flex flex-1 max-w-xl mx-2">
+              <div className="relative w-full">
+                <Input
+                  placeholder="City Name"
+                  icon={<Search size={18} />}
                   fullWidth
-                >
-                  Logout
-                </Button>
+                  className="pr-4 py-2 bg-gray-50 border-0 focus:bg-white focus:ring-1 cursor-pointer"
+                  value={selectedCity}
+                  onClick={handleCityInputClick}
+                  readOnly
+                />
+              </div>
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-3">
+              <Link to="/favorites" className="text-gray-700 hover:text-blue-600 transition-colors">
+                <Heart size={22} />
+              </Link>
+              <Button
+                onClick={() => whatsAppMessage()}
+                variant="link"
+                className='text-gray-700 hover:text-blue-600 transition-colors'
+              >
+                <BsWhatsapp size={22} />
+              </Button>
+              {isLoggedIn ? (
+                <div className="flex items-center gap-4">
+                  <Link to="/profile" className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors">
+                    <User size={22} />
+                  </Link>
+                </div>
               ) : (
-                <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-2">
                   <Button 
-                    onClick={() => {
-                      toLogin();
-                      toggleMenu();
-                    }} 
+                    onClick={toLogin} 
                     variant="outline"
-                    icon={<LogIn size={18} />}
-                    fullWidth
                   >
                     Sign In
                   </Button>
                 </div>
               )}
+              {!isMobile && <Button 
+                variant="secondary"
+                onClick={() => toNewPost()} 
+                icon={<ShoppingBag size={18} />}
+                className="bg-teal-600 hover:bg-teal-700 text-white font-medium"
+              >
+                <Link to="/newpost">
+                  Sell Now
+                </Link>
+              </Button>}
             </div>
-          </nav>
+
+            {/* Mobile menu button and sell button */}
+            <div className="md:hidden flex items-center gap-2">
+              <Button
+                onClick={() => whatsAppMessage()}
+                variant="link"
+                className='text-gray-700 hover:text-blue-600 transition-colors'
+              >
+                <BsWhatsapp size={22} color='green' />
+              </Button>
+              <button 
+                onClick={toggleMenu} 
+                className="text-gray-700"
+                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              >
+                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+          </div>
         </div>
-      )}
-    </header>
+
+        {/* Mobile Navigation Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-white border-t border-gray-100 px-4 py-2 animate-slideDown">
+            <nav className="flex flex-col space-y-3 py-2">
+              <Link to="/" className="py-2 px-3 hover:bg-gray-50 rounded-md" onClick={toggleMenu}>
+                Home
+              </Link>
+              <Link to="/favorites" className="py-2 px-3 hover:bg-gray-50 rounded-md flex items-center gap-2" onClick={toggleMenu}>
+                <Heart size={18} /> Favorites
+              </Link>
+              <Link to="/messages" className="py-2 px-3 hover:bg-gray-50 rounded-md flex items-center gap-2" onClick={toggleMenu}>
+                <MessageSquare size={18} /> Messages
+              </Link>
+              <Link to="/profile" className="py-2 px-3 hover:bg-gray-50 rounded-md flex items-center gap-2" onClick={toggleMenu}>
+                <User size={18} /> My Account
+              </Link>
+              <div className="pt-2 border-t border-gray-100">
+                {isLoggedIn ? (
+                  <Button 
+                    onClick={() => {
+                      toggleMenu();
+                    }} 
+                    variant="outline"
+                    fullWidth
+                  >
+                    Logout
+                  </Button>
+                ) : (
+                  <div className="flex flex-col gap-2">
+                    <Button 
+                      onClick={() => {
+                        toLogin();
+                        toggleMenu();
+                      }} 
+                      variant="outline"
+                      icon={<LogIn size={18} />}
+                      fullWidth
+                    >
+                      Sign In
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </nav>
+          </div>
+        )}
+      </header>
+
+      {/* City Search Modal */}
+      <CitySearchModal
+        isOpen={isCitySearchOpen}
+        onClose={handleCitySearchClose}
+        onCitySelect={handleCitySelect}
+        currentCity={selectedCity}
+      />
+    </>
   );
 };
 

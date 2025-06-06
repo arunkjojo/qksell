@@ -44,11 +44,11 @@ function App() {
               <Route path="/signin" element={<Login />} />
               <Route path="/newpost" element={<NewPost activeStage={APP_PATH.STATE} />} />
               <Route path="/image-upload/:id" element={<ImageUpload />} />
-              <Route path="/p/:id" element={<HeaderFooterWrapper><PostDetails /></HeaderFooterWrapper>} />
-              <Route path="/pm/:id" element={<HeaderFooterWrapper newPost={false}><PostDetails /></HeaderFooterWrapper>} />
+              <Route path="/p/:id" element={<HeaderFooterWrapper><PostDetails /><Footer /></HeaderFooterWrapper>} />
+              <Route path="/pm/:id" element={<HeaderFooterWrapper newPost={false}><PostDetails /><Footer /></HeaderFooterWrapper>} />
               <Route path="/cart/:id" element={<Cart />} />
-              <Route path="/search" element={<HeaderFooterWrapper><Search /></HeaderFooterWrapper>} />
-              <Route path="/c/:cname" element={<HeaderFooterWrapper><CategoryPost /></HeaderFooterWrapper>} />
+              <Route path="/search" element={<HeaderFooterWrapper><Search /><Footer /></HeaderFooterWrapper>} />
+              <Route path="/c/:cname" element={<HeaderFooterWrapper><CategoryPost /><Footer /></HeaderFooterWrapper>} />
               <Route path="/newpost/state" element={<NewPost activeStage={APP_PATH.STATE} />} />
               <Route path="/newpost/district" element={<NewPost activeStage={APP_PATH.DISTRICT} />} />
               <Route path="/newpost/category" element={<NewPost activeStage={APP_PATH.CATEGORY} />} />
@@ -56,7 +56,7 @@ function App() {
               <Route path="/newpost/postDetails" element={<NewPost activeStage={APP_PATH.POST_DETAILS} />} />
               <Route path="/newpost/user" element={<NewPost activeStage={APP_PATH.USER} />} />
               <Route path="/newpost/otpValidation" element={<NewPost activeStage={APP_PATH.OTP} />} />
-              <Route path="*" element={<HeaderFooterWrapper><NotFound /></HeaderFooterWrapper>} />
+              <Route path="*" element={<HeaderFooterWrapper><NotFound /><Footer /></HeaderFooterWrapper>} />
             </Routes>
           </main>
         </div>
