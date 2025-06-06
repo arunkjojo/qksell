@@ -6,7 +6,6 @@ import {
   Calendar, 
   Heart, 
   Share2,
-  ArrowLeft,
   ChevronLeft, 
   ChevronRight,
   Rocket,
@@ -140,6 +139,8 @@ export const PostDetails: React.FC = () => {
     const link = product?.location?.link;
     if (link) window.open(link, '_blank');
   }
+
+  const importanceIndicate = () => <span className='text-red-600'>*</span>
   return (
     <>
       <Helmet>
@@ -152,16 +153,6 @@ export const PostDetails: React.FC = () => {
       </Helmet>
       <div className="bg-gray-50 py-4 min-h-screen">
         <div className="container mx-auto px-4">
-          <div className="mb-6">
-            <Link 
-              to="/"
-              className="inline-flex items-center text-gray-600 hover:text-blue-600"
-            >
-              <ArrowLeft size={16} className="mr-2" />
-              Back to Listings
-            </Link>
-          </div>
-          
           <div className="bg-white rounded-lg shadow-sm overflow-hidden">
             <div className="flex flex-col lg:flex-row">
               {/* Image Gallery */}
@@ -216,10 +207,10 @@ export const PostDetails: React.FC = () => {
               </div>
               
               {/* Product Details */}
-              <div className="lg:w-2/5 p-2">
+              <div className="lg:w-2/5 p-4">
                 <div className="flex flex-col justify-between mb-4">
-                  <h1 className="text-2xl font-bold text-gray-900">{product?.title}</h1>
-                  <h4 className="text-lg font-bold text-gray-900">{product?.local_title}</h4>
+                  <h1 className="text-md font-bold text-gray-900">{product?.title}</h1>
+                  <h4 className="text-sm font-bold text-gray-900 local_lang">{product?.local_title}</h4>
                   <div className="flex flex-col gap-1 mb-2">
                     <button
                       onClick={joinWhatsappGroup}
@@ -280,13 +271,21 @@ export const PostDetails: React.FC = () => {
                 </div>
                 
                 <div className="mb-6 pb-6 border-b border-gray-200">
-                  <h2 className="text-lg font-medium text-gray-900 mb-3">Seller Information</h2>
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-gray-700 font-bold text-lg mr-3">
-                      {product?.seller?.name.charAt(0)}
+                  <h2 className="text-lg font-medium text-gray-900 mb-2">Seller Information</h2>
+                  <div className="flex items-center mb-2">
+                    <div className="px-4 py-2">
+                      <p className="font-bold text-[rgb(27,135,62)]">{product?.isOwner} Listed</p>
+                      {product?.commission && (<p className="font-bold text-[rgb(27,135,62)]">{product?.commission} {importanceIndicate()}</p>)}
                     </div>
-                    <div>
-                      <h3 className="font-medium">{toCapitalize(product?.seller?.name || '')}</h3>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="w-12 h-12 bg-[rgb(27,135,62)] rounded-full flex items-center justify-center text-white font-bold text-lg mr-3">
+                      {product?.seller?.name.charAt(0)?.toUpperCase()}
+                    </div>
+                    <div className="flex flex-col md:flex-row">
+                      <h3 className="font-medium cursor-pointer hover:text-[rgb(27,135,62)]" onClick={() => whatsAppMessage(product?.seller?.number)}>{toCapitalize(product?.seller?.name || '')}</h3>
+                      <span className="hidden md:block pr-2">, </span>
+                      <h5 className="font-medium cursor-pointer hover:text-[rgb(27,135,62)]" onClick={() => whatsAppMessage(product?.seller?.number)}>{product?.seller?.number || ''}</h5>
                     </div>
                   </div>
                 </div>
@@ -315,8 +314,8 @@ export const PostDetails: React.FC = () => {
                   </Button>
                 </div>
                 
-                <div className="mt-6 text-center text-sm text-gray-500">
-                  When contacting the seller, please mention that you found this listing on QK Sell
+                <div className="mt-6 text-center text-sm font-bold text-red-500">
+                  * Confirm all details with seller before trade
                 </div>
               </div>
             </div>
@@ -346,7 +345,7 @@ export const PostDetails: React.FC = () => {
                   <div className="p-2 flex-1 flex flex-col justify-between">
                     <div>
                       <div className="flex flex-wrap items-start justify-between gap-2">
-                        <h4 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                        <h4 className="font-medium text-[0.75rem] text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                           {similarProduct?.title?.replace(' , ', ', ')?.replace(', ', ',')?.replace(',', ', ')}
                         </h4>
                         <div className='flex justify-between w-full'>

@@ -49,7 +49,7 @@ const Header: React.FC = () => {
 
   const handleSearch = () => {
     const searchParams = new URLSearchParams();
-    if (searchTerm) searchParams.set('q', searchTerm);
+    if (searchTerm) searchParams.set('l', searchTerm);
     setTimeout(() => setSearchTerm(''), 300);
     navigate(`/search?${searchParams.toString()}`);
   };

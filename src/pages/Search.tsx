@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
 import { useAppSelector } from '@hooks/useAppSelector';
 import { Product } from '@common/types';
 import { formatPrice } from '@utils/formatPrice';
@@ -11,37 +10,19 @@ export const Search: React.FC = () => {
   const [searchParams] = useSearchParams();
   const { products } = useAppSelector((state) => state.app);
   const isMobile = useIsMobile()
-  const searchTerm = searchParams.get('q') || null;
-  const location = searchParams.get('location') || null;
+  const location = searchParams.get('l') || null;
   const searchResults:Product[] = products.filter(product => {
-    const matchesSearch = searchTerm ? (
-      product?.title?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
-      product?.description?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
-      product?.category?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
-      product?.location?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
-    ) : true;
-
     const matchesLocation = location ?
       product?.location?.name?.toLowerCase().includes(location?.toLowerCase()) : true;
 
-    return matchesSearch && matchesLocation;
+    return matchesLocation;
   });
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6">
-        <Link
-          to="/"
-          className="inline-flex items-center text-gray-600 hover:text-blue-600"
-        >
-          <ArrowLeft size={16} className="mr-2" />
-          Back to Listings
-        </Link>
-      </div>
-      <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900">
           Search Results
-          {searchTerm && <span className="text-gray-600"> for "{searchTerm}"</span>}
           {location && <span className="text-gray-600"> in {location}</span>}
         </h1>
         <p className="text-gray-600 mt-2">

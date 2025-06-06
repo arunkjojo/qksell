@@ -109,3 +109,10 @@ a, button {
 .grecaptcha-badge {
   visibility: hidden !important;
 }
+
+.local_lang {
+  font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:"wdth" 100;
+}

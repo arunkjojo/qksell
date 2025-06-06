@@ -39,7 +39,9 @@ export const NewPost = ({ activeStage = APP_PATH.STATE }) => {
         sellRent,
         userName,
         userMobile,
-        otpVerification
+        otpVerification,
+        ownerAgent,
+        commission
     } = useAppSelector((state) => state.form);
     const dispatch = useAppDispatch();
 
@@ -298,7 +300,9 @@ export const NewPost = ({ activeStage = APP_PATH.STATE }) => {
                 UserName: userName,
                 UserMobile: `${SMS.country}${userMobile}`,
                 moreData: getSubCategories(category?.name || ''),
-                title: postTitle
+                title: postTitle,
+                OwnerAgent: ownerAgent?.name,
+                Commission: commission
             };
             setCookie('LocationId', String(district?.id), 365);
             setCookie('LocationName', String(district?.name), 365);
@@ -319,7 +323,9 @@ export const NewPost = ({ activeStage = APP_PATH.STATE }) => {
         userMobile,
         postTitle,
         getSubCategories,
-        createNewPost
+        createNewPost,
+        ownerAgent,
+        commission
     ]);
 
     useEffect(() => {

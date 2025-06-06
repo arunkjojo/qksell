@@ -35,6 +35,9 @@ export interface Product {
   createdAt: string;
   featured?: boolean;
   view?: number;
+  isOwner?: string;
+  commission: string | number;
+  commission_details?: string | null | unknown
 }
 
 export interface Category {
@@ -172,7 +175,9 @@ export interface FormData {
   userMobile?: number;
   postDescription?: string;
   errors?: Errors[],
-  otpVerification: OtpCredentials
+  otpVerification: OtpCredentials,
+  ownerAgent?: SellRent;
+  commission?: string | number;
 }
 
 export interface OtpResponse {
@@ -207,6 +212,8 @@ export interface PostData {
   UserMobile?: string;
   JsonData?: unknown;
   title?: string;
+  OwnerAgent?: string;
+  Commission?: string | number;
 }
 
 export interface PostResponse {

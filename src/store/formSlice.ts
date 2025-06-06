@@ -37,6 +37,12 @@ export const formSlice = createSlice({
     setSellRent: (state, action: PayloadAction<{ id: number; name: string; icon: string; }>) => {
       state.sellRent = action.payload;
     },
+    setOwnerAgent: (state, action: PayloadAction<{ id: number; name: string; icon: string; }>) => {
+      state.ownerAgent = action.payload;
+    },
+    setCommission: (state, action: PayloadAction<string | number>) => {
+      state.commission = action.payload;
+    },
     setUserName: (state, action: PayloadAction<string>) => {
       state.userName = action.payload;
     },
@@ -62,6 +68,8 @@ export const {
   setUserName,
   setUserNumber,
   resetForm,
-  setOtpCredentials
+  setOtpCredentials,
+  setOwnerAgent,
+  setCommission
 } = formSlice.actions;
 export default formSlice.reducer;

@@ -340,3 +340,16 @@ export const SELL_RENT = [
     "icon": "Rent"
   }
 ];
+
+export const OWNER_AGENT = [
+  {
+    "id": 1,
+    "name": "Owner",
+    "icon": "Owner"
+  },
+  {
+    "id": 2,
+    "name": "Agent",
+    "icon": "Agent"
+  }
+];
