@@ -20,6 +20,7 @@ import { getCookie } from '@utils/getCookie';
 import { setMetaTag } from '@utils/metaUtils';
 import { Product } from '@common/types';
 import { toCapitalize } from '@utils/toCapitalize';
+import { setCookie } from '@utils/setCookie';
 
 export const PostDetails: React.FC = () => {
   const params = useParams();
@@ -78,6 +79,8 @@ export const PostDetails: React.FC = () => {
       setMetaTag("twitter:title", product?.title, false);
       setMetaTag("twitter:description", product?.description, false);
       setMetaTag("twitter:image", product?.images[0], false);
+
+      if (product?.location?.link) setCookie('whatsappLink', product?.location?.link);
     }
   }, [product])
 

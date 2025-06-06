@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { LoadingProvider } from '@context/LoadingContext';
-import { NewPostIcon } from '@ui/NewPostIcon';
 import Header from '@components/layout/Header';
 import Footer from '@components/layout/Footer';
+import { NewPostIcon } from '@components/layout/NewPostIcon';
+import { MobileFooterIcons } from '@components/layout/MobileFooterIcons';
 import { APP_PATH } from '@common/constants';
 import { Home } from '@pages/Home';
 import { Login } from '@pages/Login';
@@ -15,11 +16,12 @@ import { PostDetails } from '@pages/PostDetails';
 import { NotFound } from '@pages/NotFound';
 import { CategoryPost } from '@pages/CategoryPost';
 
-const HeaderFooterWrapper = ({ newPost = true, children }: { newPost?: boolean;children: React.ReactNode }) => (
+const HeaderFooterWrapper = ({ footer = true, newPostFooter = false, children }: { footer?: boolean; newPostFooter?: boolean; children: React.ReactNode }) => (
   <>
     <Header />
     {children}
-    {newPost && <NewPostIcon />}
+    {footer && <MobileFooterIcons />}
+    {newPostFooter && <NewPostIcon />}
   </>
 );
 
@@ -44,11 +46,11 @@ function App() {
               <Route path="/signin" element={<Login />} />
               <Route path="/newpost" element={<NewPost activeStage={APP_PATH.STATE} />} />
               <Route path="/image-upload/:id" element={<ImageUpload />} />
-              <Route path="/p/:id" element={<HeaderFooterWrapper><PostDetails /><Footer /></HeaderFooterWrapper>} />
-              <Route path="/pm/:id" element={<HeaderFooterWrapper newPost={false}><PostDetails /><Footer /></HeaderFooterWrapper>} />
+              <Route path="/p/:id" element={<HeaderFooterWrapper footer={false} newPostFooter={true}><PostDetails /></HeaderFooterWrapper>} />
+              <Route path="/pm/:id" element={<HeaderFooterWrapper footer={false} newPostFooter={true}><PostDetails /></HeaderFooterWrapper>} />
               <Route path="/cart/:id" element={<Cart />} />
-              <Route path="/search" element={<HeaderFooterWrapper><Search /><Footer /></HeaderFooterWrapper>} />
-              <Route path="/c/:cname" element={<HeaderFooterWrapper><CategoryPost /><Footer /></HeaderFooterWrapper>} />
+              <Route path="/search" element={<HeaderFooterWrapper><Search /></HeaderFooterWrapper>} />
+              <Route path="/c/:cname" element={<HeaderFooterWrapper><CategoryPost /></HeaderFooterWrapper>} />
               <Route path="/newpost/state" element={<NewPost activeStage={APP_PATH.STATE} />} />
               <Route path="/newpost/district" element={<NewPost activeStage={APP_PATH.DISTRICT} />} />
               <Route path="/newpost/category" element={<NewPost activeStage={APP_PATH.CATEGORY} />} />
@@ -56,7 +58,7 @@ function App() {
               <Route path="/newpost/postDetails" element={<NewPost activeStage={APP_PATH.POST_DETAILS} />} />
               <Route path="/newpost/user" element={<NewPost activeStage={APP_PATH.USER} />} />
               <Route path="/newpost/otpValidation" element={<NewPost activeStage={APP_PATH.OTP} />} />
-              <Route path="*" element={<HeaderFooterWrapper><NotFound /><Footer /></HeaderFooterWrapper>} />
+              <Route path="*" element={<HeaderFooterWrapper><NotFound /></HeaderFooterWrapper>} />
             </Routes>
           </main>
         </div>

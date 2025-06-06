@@ -101,7 +101,8 @@ export interface CommonData {
   completeStep: string[];
   categories: Category[];
   products: Product[];
-  districts: District[]
+  allDistricts: District[];
+  districts: District[];
 }
 
 export interface ApiResponse<T> {
@@ -318,7 +319,7 @@ export interface AuthLoginResponse {
   authMobile: string
 }
 export interface PaginatedData<T> {
-  data: T[];
+  data: Record<string, T>;
   hasMore: boolean;
   totalItems: number;
   pageNumber: number;

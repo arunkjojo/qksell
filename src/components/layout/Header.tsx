@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, User, Heart, MessageSquare, Menu, X, ShoppingBag, LogIn } from 'lucide-react';
+import { Search, User, Heart, MessageSquare, ShoppingBag, LogIn } from 'lucide-react';
 import { BsWhatsapp } from 'react-icons/bs';
 import Button from '@ui/Button';
 import Input from '@ui/Input';
 import { getCookie } from '@utils/getCookie';
 import { base64Decode } from '@utils/base64Decode';
 import { useIsMobile } from '@hooks/useIsMobile';
-import { CitySearchModal } from '@components/search/CitySearchModal';
 import { District } from '@common/types';
+import { CitySearchModal } from '@components/common/CitySearchModal';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile()
-  const [searchTerm, setSearchTerm] = useState('');
+  // const [searchTerm, setSearchTerm] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isCitySearchOpen, setIsCitySearchOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState('');
 
   const locationName = getCookie('LocationName');
-  
   useEffect(() => {
     const authToken = parseInt(base64Decode(base64Decode(getCookie('userToken') ?? '')), 10);
     if (authToken && !isNaN(authToken)) {
@@ -30,6 +29,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     if (locationName) {
+      // setSearchTerm(locationName);
       setSelectedCity(locationName);
     }
   }, [locationName]);
@@ -52,12 +52,12 @@ const Header: React.FC = () => {
     window.open(url, '_blank');
   };
 
-  const handleSearch = () => {
-    const searchParams = new URLSearchParams();
-    if (searchTerm) searchParams.set('l', searchTerm);
-    setTimeout(() => setSearchTerm(''), 300);
-    navigate(`/search?${searchParams.toString()}`);
-  };
+  // const handleSearch = () => {
+  //   const searchParams = new URLSearchParams();
+  //   if (searchTerm) searchParams.set('l', searchTerm);
+  //   setTimeout(() => setSearchTerm(''), 300);
+  //   navigate(`/search?${searchParams.toString()}`);
+  // };
 
   const handleCityInputClick = () => {
     setIsCitySearchOpen(true);
@@ -88,7 +88,7 @@ const Header: React.FC = () => {
             <div className="flex flex-1 max-w-xl mx-2">
               <div className="relative w-full">
                 <Input
-                  placeholder="City Name"
+                  placeholder="Search for posts, categories, locations..."
                   icon={<Search size={18} />}
                   fullWidth
                   className="pr-4 py-2 bg-gray-50 border-0 focus:bg-white focus:ring-1 cursor-pointer"
@@ -148,13 +148,13 @@ const Header: React.FC = () => {
               >
                 <BsWhatsapp size={22} color='green' />
               </Button>
-              <button 
+              {/* <button 
                 onClick={toggleMenu} 
                 className="text-gray-700"
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -207,12 +207,11 @@ const Header: React.FC = () => {
         )}
       </header>
 
-      {/* City Search Modal */}
       <CitySearchModal
-        isOpen={isCitySearchOpen}
-        onClose={handleCitySearchClose}
-        onCitySelect={handleCitySelect}
-        currentCity={selectedCity}
+      isOpen={isCitySearchOpen}
+      onClose={handleCitySearchClose}
+      onCitySelect={handleCitySelect}
+      currentCity={selectedCity}
       />
     </>
   );

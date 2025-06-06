@@ -8,6 +8,7 @@ const initialState: CommonData = {
   completeStep: [],
   categories: [],
   products: [],
+  allDistricts: [],
   districts: []
 };
 
@@ -32,6 +33,9 @@ export const appSlice = createSlice({
     setProductList: (state, action: PayloadAction<Product[]>) => {
       state.products = action.payload;
     },
+    setAllDistricts: (state, action: PayloadAction<District[]>) => {
+      state.allDistricts = action.payload;
+    },
     setDistrictList: (state, action: PayloadAction<District[]>) => {
       state.districts = action.payload;
     },
@@ -45,6 +49,7 @@ export const {
   setCompleteStep,
   setCategoryList,
   setProductList,
+  setAllDistricts,
   setDistrictList,
   resetApplication
 } = appSlice.actions;
