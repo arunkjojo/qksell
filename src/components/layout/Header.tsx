@@ -69,7 +69,7 @@ const Header: React.FC = () => {
           <div className="flex flex-1 max-w-xl mx-2">
             <div className="relative w-full">
               <Input
-                placeholder="Search for posts, categories, locations..."
+                placeholder="City Name"
                 icon={<Search size={18} />}
                 fullWidth
                 className="pr-4 py-2 bg-gray-50 border-0 focus:bg-white focus:ring-1"
