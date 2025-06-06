@@ -20,7 +20,6 @@ const HeaderFooterWrapper = ({ newPost = true, children }: { newPost?: boolean;c
     <Header />
     {children}
     {newPost && <NewPostIcon />}
-    <Footer />
   </>
 );
 
@@ -41,7 +40,7 @@ function App() {
         <div className="flex flex-col min-h-screen">
           <main className="flex-grow">
             <Routes>
-              <Route path="/" element={<HeaderFooterWrapper><Home /></HeaderFooterWrapper>} />
+              <Route path="/" element={<HeaderFooterWrapper><Home /><Footer /></HeaderFooterWrapper>} />
               <Route path="/signin" element={<Login />} />
               <Route path="/newpost" element={<NewPost activeStage={APP_PATH.STATE} />} />
               <Route path="/image-upload/:id" element={<ImageUpload />} />
