@@ -37,7 +37,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <h5 className="font-medium text-[0.75rem] text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
               {product?.title?.replace(' , ', ', ')?.replace(', ', ',')?.replace(',', ', ')}
             </h5>
-            <h6 className="font-medium text-gray-700 line-clamp-2 text-[0.7rem]">
+            <h6 className="font-medium text-gray-700 line-clamp-2 text-[0.7rem] local_lang">
               {product?.local_title?.replace(' , ', ', ')?.replace(', ', ',')?.replace(',', ', ')}
             </h6>
             <div className='flex justify-between w-full'>
