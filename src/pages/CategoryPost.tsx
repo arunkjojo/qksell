@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-// import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { Product } from '@common/types';
 import ProductCard from '@components/home/ProductCard';
 import { toCapitalize } from '@utils/toCapitalize';
@@ -13,11 +13,12 @@ export const CategoryPost: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const ITEMS_PER_PAGE = 40;
 
   useEffect(() => {
     const fetchProductsByCategory = async () => {
+      setLoading(true);
       const response = await getPostListByCategory({
         cname: cname || '',
         page: page,
@@ -30,30 +31,24 @@ export const CategoryPost: React.FC = () => {
           setLoading(false);
         }, 2000);
       }
-      const paginatedArray = response.data[0] || [];
-      const newProducts = paginatedArray.data;
+      const newProducts = Object.values(response?.data[0]?.data); // Convert object to array
 
-      // Append new products to the existing list without duplicates
       setProducts((prev) => {
         const existingIds = new Set(prev.map(p => p.id));
         const filteredNew = newProducts.filter(p => !existingIds.has(p.id));
         return [...prev, ...filteredNew];
       });
-      // Check if there are more products to load
-      setHasMore(paginatedArray.hasMore);
+
+      setHasMore(response?.data[0]?.hasMore);
     };
 
     setHasMore(false);
-    setLoading(true);
-    if (cname && cname !== '' && page) fetchProductsByCategory();
-    else {
-      setLoading(false);
-      navigate('/');
-    }
+    if (!cname || cname === '') navigate('/');
+    else if (cname && cname !== '' && page && !loading) fetchProductsByCategory();
   }, [cname, page, navigate]);
 
   const loadMore = () => {
-    setPage(prev => prev + 1);
+    if (!loading) setPage(prev => prev + 1);
   };
 
   if (loading && products.length === 0) {
@@ -72,12 +67,9 @@ export const CategoryPost: React.FC = () => {
             {toCapitalize(cname?.replace('-', ' & ')?.toLowerCase())}
           </h1>
         )}
-        <p className="text-gray-600 mt-2">
-          Browse all listings in this category
-        </p>
       </div>
 
-      {/* <InfiniteScroll
+      <InfiniteScroll
         dataLength={products.length}
         next={() => loadMore()}
         hasMore={hasMore}
@@ -86,15 +78,15 @@ export const CategoryPost: React.FC = () => {
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
           </div>
         }
-      > */}
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {products.map((product) => (
             <ProductCard key={product?.id} product={product} />
           ))}
         </div>
-      {/* </InfiniteScroll> */}
+      </InfiniteScroll>
 
-      {hasMore && (
+      {/* {hasMore && (
         <div className="flex justify-center mt-6">
           <button
             onClick={loadMore}
@@ -103,7 +95,7 @@ export const CategoryPost: React.FC = () => {
             Load More
           </button>
         </div>
-      )}
+      )} */}
       {products.length === 0 && !loading && (
         <div className="text-center py-8">
           <p className="text-gray-600">No products found in this category.</p>
