@@ -10,3 +10,17 @@ export function getCookie(name: string): string | null {
     }
     return null;
 }
+
+// Returns the current domain (hostname)
+export function getCurrentDomain(): string {
+    return window.location.hostname;
+}
+
+// Enhanced getCookie: returns cookie only if domain matches (if domain is provided)
+export function getCookieByDomain(name: string, domain?: string): string | null {
+    const currentDomain = window.location.hostname;
+    if (domain && domain !== currentDomain) {
+        return null;
+    }
+    return getCookie(name);
+}

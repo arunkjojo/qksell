@@ -31,6 +31,9 @@ const UPDATE_STATUS = "phonepeStatusUpdate.php";
 
 const LOGIN = "login.php";
 const CATEGORY_POST_LIST = "categoryPost.php";
+const LOCATION_POST_LIST = "locationPost.php";
+const ALL_DISTRICTS = "allDistricts.php";
+const USER_POST_LIST = "userPost.php";
 
 // Application API urls
 export const getLocationsUrl = `${API_BASE_URL}/${LOCATIONS}`;
@@ -59,3 +62,6 @@ export const updatePaymentStatusUrl = `${API_BASE_URL}/${UPDATE_STATUS}`;
 export const authLoginUrl = `${API_BASE_URL}/${LOGIN}`;
 
 export const getPostListByCategoryUrl = `${API_BASE_URL}/${CATEGORY_POST_LIST}`;
+export const getPostListByLocationUrl = `${API_BASE_URL}/${LOCATION_POST_LIST}`;
+export const getAllDistrictsUrl = `${API_BASE_URL}/${ALL_DISTRICTS}`;
+export const getUserPostListUrl = `${API_BASE_URL}/${USER_POST_LIST}`;

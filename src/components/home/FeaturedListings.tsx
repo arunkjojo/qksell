@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { toCapitalize } from '@utils/toCapitalize';
 import { useAppSelector } from '@hooks/useAppSelector';
 import ProductCard from '@components/home/ProductCard';
+import { toSlug } from '@utils/toSlug';
 
 const FeaturedListings: React.FC = () => {
   const { categories, products } = useAppSelector((state) => state.app);
@@ -22,7 +23,7 @@ const FeaturedListings: React.FC = () => {
                 </h4>
               </div>
               <Link
-                to={`/category/${category?.id}`}
+                to={`/c/${toSlug(category?.name)}`}
                 className="text-blue-600 hover:text-blue-800 font-medium flex items-center"
               >
                 View All

@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+*::-webkit-scrollbar {
+  width: 0px !important;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 100px;
+  border: 0px none transparent;
+}
+
 /* Custom Animation Classes */
 .animate-fadeIn {
   animation: fadeIn 0.8s ease-in-out forwards;

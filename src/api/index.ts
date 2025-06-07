@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import type { ApiResponse, AuthLoginResponse, Category, District, OtpResponse, PaginatedData, PaymentStatusResponse, PhonePePayload, PhonePeResponse, PostData, PostResponse, Product, PromotionOrderPayload, PromotionResponse, State, VerificationResponse } from '@common/types';
 import { setIdparamsToApi } from '@utils/apiParams';
 import { displayStatus } from '@utils/displayStatus';
-import { authLoginUrl, createPostUrl, getCategoriesUrl, getDistrictByIdUrl, getLatestPostUrl, getLocationsByIdUrl, getLocationsUrl, getPaymentStatusUrl, getPostByIdUrl, getPostListByCategoryUrl, getSimilarPostByIdUrl, paymentUrl, postImgeByIdUrl, postImgeUrl, promotionUrl, sendOtpUrl, updateOrderStatusUrl, updatePaymentStatusUrl, validateOtpUrl } from './url';
+import { authLoginUrl, createPostUrl, getAllDistrictsUrl, getCategoriesUrl, getDistrictByIdUrl, getLatestPostUrl, getLocationsByIdUrl, getLocationsUrl, getPaymentStatusUrl, getPostByIdUrl, getPostListByCategoryUrl, getPostListByLocationUrl, getSimilarPostByIdUrl, getUserPostListUrl, paymentUrl, postImgeByIdUrl, postImgeUrl, promotionUrl, sendOtpUrl, updateOrderStatusUrl, updatePaymentStatusUrl, validateOtpUrl } from './url';
 
 
 export async function fetchStates(): Promise<ApiResponse<State>> {
@@ -307,6 +307,84 @@ export async function getPostListByCategory({
 
   try {
     const response = await fetch(`${getPostListByCategoryUrl}?${params}`);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch posts: ${response.statusText}`);
+    }
+
+    const json: PaginatedData<Product> = await response.json();
+
+    return { data: [json], error: '' };
+  } catch (error) {
+    return {
+      data: [],
+      error: (error as Error).message
+    };
+  }
+}
+export async function getPostListByLocation({
+  location,
+  page,
+  limit
+}: {
+  location: string;
+  page: number;
+  limit: number;
+}): Promise<ApiResponse<PaginatedData<Product>>> {
+  const params = new URLSearchParams({
+    location: location.toString(),
+    page: page.toString(),
+    limit: limit.toString()
+  });
+
+  try {
+    const response = await fetch(`${getPostListByLocationUrl}?${params}`);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch posts: ${response.statusText}`);
+    }
+
+    const json: PaginatedData<Product> = await response.json();
+
+    return { data: [json], error: '' };
+  } catch (error) {
+    return {
+      data: [],
+      error: (error as Error).message
+    };
+  }
+}
+
+export async function fetchAllDistricts(): Promise<ApiResponse<District>> {
+  try {
+    const response = await fetch(getAllDistrictsUrl);
+    if (!response.ok) {
+      throw new Error('Failed to fetch districts');
+    }
+    const data = await response.json();
+    return { data };
+  } catch (error) {
+    return { data: [], error: (error as Error).message };
+  }
+}
+
+export async function fetchPostByUser({
+  userId,
+  page,
+  limit
+}: {
+  userId: number;
+  page: number;
+  limit: number;
+}): Promise<ApiResponse<PaginatedData<Product>>> {
+  const params = new URLSearchParams({
+    userId: userId.toString(),
+    page: page.toString(),
+    limit: limit.toString()
+  });
+
+  try {
+    const response = await fetch(`${getUserPostListUrl}?${params}`);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch posts: ${response.statusText}`);

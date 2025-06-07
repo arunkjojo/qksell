@@ -21,6 +21,7 @@ import { setMetaTag } from '@utils/metaUtils';
 import { Product } from '@common/types';
 import { toCapitalize } from '@utils/toCapitalize';
 import { setCookie } from '@utils/setCookie';
+import { joinWhatsappGroup } from '@utils/joinWhatsAppGroup';
 
 export const PostDetails: React.FC = () => {
   const params = useParams();
@@ -82,7 +83,19 @@ export const PostDetails: React.FC = () => {
 
       if (product?.location?.link) setCookie('whatsappLink', product?.location?.link);
     }
-  }, [product])
+  }, [product]);
+
+  useEffect(() => {
+    const fav = localStorage.getItem('favItems') || '[]';
+    let favoritesItems = [];
+    try {
+      favoritesItems = JSON.parse(fav);
+    } catch {
+      favoritesItems = [];
+    }
+    const postId = product?.id;
+    setIsFavorite(postId ? favoritesItems.includes(postId) : false);
+  }, [product]);
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -127,7 +140,29 @@ export const PostDetails: React.FC = () => {
   };
 
   const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
+    const fav = localStorage.getItem('favItems') || '[]';
+    let favoritesItems = [];
+    try {
+      favoritesItems = JSON.parse(fav);
+    } catch {
+      favoritesItems = [];
+    }
+    const postId = product?.id;
+    if (!postId) return;
+    const index = favoritesItems.indexOf(postId);
+    if (index > -1) {
+      // Remove from favorites
+      favoritesItems.splice(index, 1);
+      setIsFavorite(false);
+    } else {
+      // Add to favorites with max 10 items
+      if (favoritesItems.length >= 10) {
+        favoritesItems.shift(); // Remove the first (oldest) item
+      }
+      favoritesItems.push(postId);
+      setIsFavorite(true);
+    }
+    localStorage.setItem('favItems', JSON.stringify(favoritesItems));
   };
 
   const handlePromote = () => navigate(`/cart/${params?.id}`);
@@ -137,11 +172,6 @@ export const PostDetails: React.FC = () => {
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   };
-
-  const joinWhatsappGroup = () => {
-    const link = product?.location?.link;
-    if (link) window.open(link, '_blank');
-  }
 
   const importanceIndicate = () => <span className='text-red-600'>*</span>
   return (
@@ -280,6 +310,8 @@ export const PostDetails: React.FC = () => {
                       <p className="font-bold text-[rgb(27,135,62)]">{product?.isOwner} Listed</p>
                       {product?.commission && (<p className="font-bold text-[rgb(27,135,62)]">{product?.commission} {importanceIndicate()}</p>)}
                     </div>
+
+
                   </div>
                   <div className="flex items-center">
                     <div className="w-12 h-12 bg-[rgb(27,135,62)] rounded-full flex items-center justify-center text-white font-bold text-lg mr-3">
@@ -332,6 +364,7 @@ export const PostDetails: React.FC = () => {
                 <Link
                   to={`/p/${similarProduct?.id}`}
                   className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-2 border-gray-400 flex flex-row overflow-hidden !pr-1"
+                  key={similarProduct?.id}
                 >
                   {/* Left Side - Image */}
                   <div className="relative rounded-lg w-1/3">

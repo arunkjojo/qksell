@@ -3,7 +3,7 @@ import { Search, MessageSquare, CheckCircle, Upload } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const steps: {
-  icon: JSX.Element;
+  icon: React.JSX.Element;
   title: string;
   description: string;
 }[] = [

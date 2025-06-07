@@ -10,13 +10,17 @@ import { useIsMobile } from '@hooks/useIsMobile';
 import { District } from '@common/types';
 import { CitySearchModal } from '@components/common/CitySearchModal';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  isCitySearchOpen: boolean;
+  setIsCitySearchOpen: (open: boolean) => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ isCitySearchOpen, setIsCitySearchOpen }) => {
   const navigate = useNavigate();
   const isMobile = useIsMobile()
   // const [searchTerm, setSearchTerm] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isCitySearchOpen, setIsCitySearchOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState('');
 
   const locationName = getCookie('LocationName');
@@ -206,7 +210,6 @@ const Header: React.FC = () => {
           </div>
         )}
       </header>
-
       <CitySearchModal
       isOpen={isCitySearchOpen}
       onClose={handleCitySearchClose}

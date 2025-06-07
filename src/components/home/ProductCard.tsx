@@ -6,20 +6,21 @@ import { useIsMobile } from '@hooks/useIsMobile';
 
 interface ProductCardProps {
   product: Product;
+  extraChild?: React.JSX.Element;
+  isUser?: boolean
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, isUser = false }) => {
   const [isHovered, setIsHovered] = useState(false);
   const isMobile = useIsMobile();
 
   return (
     <Link
-      to={`/p/${product?.id}`}
+      to={isUser ? `/pm/${product?.id}` : `/p/${product?.id}`}
       className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-2 border-gray-400 flex flex-row overflow-hidden !pr-1"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Left Side - Image */}
       <div className="relative rounded-lg w-1/3">
         <div className="aspect-[5/3] w-full bg-gray-200 relative h-full">
           <img

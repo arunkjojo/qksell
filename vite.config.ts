@@ -114,8 +114,9 @@ export default defineConfig({
       workbox: {
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/dev\.qksell\.in\/.*/,
-            handler: 'CacheFirst',
+            // urlPattern: /^https:\/\/dev\.qksell\.in\/.*/,
+            urlPattern: ({ url }) => url.origin === url.origin && /\.(js|css|png|svg|ico)$/.test(url.pathname),
+            handler: 'CacheOnly',
             options: {
               cacheName: 'qksell-cache',
               expiration: {

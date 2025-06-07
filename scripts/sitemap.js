@@ -32,16 +32,10 @@ const pages = [
     sitemap.end();
 
     await streamToPromise(sitemap);
-    console.log(`✅ Sitemap written to ${outputPath}`);
-    
-
     
     const outputPath2 = "./dist/robots.txt";
     const content = `Sitemap: ${baseUrl}/sitemap.xml`; // `User-agent: *\nDisallow:\nSitemap: ${baseUrl}/sitemap.xml`;
 
     // Write the file
     writeFileSync(outputPath2, content, "utf8");
-
-    console.log(`✅ Robots written to ${outputPath2}`);
-
 })();

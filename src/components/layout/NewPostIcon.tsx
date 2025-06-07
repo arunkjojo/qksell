@@ -3,14 +3,10 @@ import Button from '@ui/Button';
 import { ShoppingBag } from 'lucide-react';
 import { BsWhatsapp } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import { getCookie } from '@utils/getCookie';
+import { joinWhatsappGroup } from '@utils/joinWhatsAppGroup';
 
 export const NewPostIcon = () => {
     const isMobile = useIsMobile();
-    const whatsAppLink = getCookie('whatsappLink');
-    const joinWhatsappGroup = () => {
-        if (whatsAppLink) window.open(whatsAppLink, '_blank');
-      }
     if (isMobile) {
         return (
             <div className="fixed bottom-0 right-0 z-50 h-16 py-3 w-full flex item-center justify-around shadow-lg bg-white rounded-md"> 
